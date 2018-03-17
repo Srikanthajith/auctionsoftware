@@ -1,0 +1,50 @@
+<div *ngIf="showSpinner" style="margin: 0;position: absolute;top: 50%;left: 50%;transform: translate(-50%, -50%);color:#4c95e6">
+  <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  <span class="sr-only">Loading...</span>
+</div>
+<div *ngIf="!showSpinner">
+  <div *ngIf="projectdata">
+    <div *ngIf="!projectdata.length">
+      <div class="notavailable">
+        NO PROJECTS AVAILABLE
+      </div>
+      <br>
+    </div>
+  </div>
+  <div *ngIf="projectdata">
+    <h2 style="text-align:center;">PAGINATION</h2>
+    <div class="container-fluid" style="margin-top:2%;" *ngIf="projectdata.length">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <div class="row" style="padding-top:5px;padding-bottom:5px;">
+            <div class="col-md-5">
+              PROJECT TITLE
+            </div>
+            <div class="col-md-4">
+              DESCRIPTION
+            </div>
+            <div class="col-md-3">
+              USERNAME
+            </div>
+          </div>
+        </div>
+        <div class="panel-body">
+          <div class="row" *ngFor="let project of projectdata | filterBy : statusFilter; let i = index">
+            <div class="col-md-5">
+              {{project.project_title}}
+            </div>
+            <div class="col-md-4">
+              {{project.description}}
+            </div>
+            <div class="col-md-3">
+              {{project.username}}
+            </div>
+            <br>
+            <hr>
+          </div>
+        </div>
+      </div>
+      <p-paginator #paginator rows="2" [totalRecords]="total_records" pageLinkSize="3" [rowsPerPageOptions]="[2,4]" (onPageChange)="paginate($event)"></p-paginator>
+    </div>
+  </div>
+</div>
